@@ -36,7 +36,7 @@ module Moonshado
     end
 
     def deliver_sms
-      raise MoonshadoSMSException.new("Cannot deliver an empty message to #{format_number(@number)}") if @message.nil? or @message.empty?
+      raise MoonshadoSMSException.new("Invalid message") if is_message_valid?(@message)
 
       response = RestClient.post(
         @@config[:sms_api_url],
@@ -50,11 +50,15 @@ module Moonshado
 
     def format_number(number)
       formatted = number.gsub("-","").strip
-      return is_valid?(formatted) ? formatted : (raise MoonshadoSMSException.new("Phone number (#{number}) is not formatted correctly"))
+      return is_number_valid?(formatted) ? formatted : (raise MoonshadoSMSException.new("Phone number (#{number}) is not formatted correctly"))
     end
 
-    def is_valid?(number)
+    def is_number_valid?(number)
       number.length >= 11 && number[/^.\d+$/]
+    end
+
+    def is_message_valid?(message)
+      message.size <= 115 && !message.nil? && message.is_a?(String) && !message.empty?
     end
 
     class MoonshadoSMSException < StandardError; end
