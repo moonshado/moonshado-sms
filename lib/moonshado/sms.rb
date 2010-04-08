@@ -1,6 +1,4 @@
 require 'rest_client'
-require 'uri'
-require 'time'
 require 'json'
 
 module Moonshado
