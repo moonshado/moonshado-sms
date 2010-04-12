@@ -12,7 +12,7 @@ begin
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     gem.add_runtime_dependency "rest-client"
     gem.add_runtime_dependency "json"
-    gem.add_runtime_dependency "active_support"
+    gem.add_runtime_dependency "activesupport"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
