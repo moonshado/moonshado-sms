@@ -1,29 +1,17 @@
+require 'active_support'
 require 'rest_client'
 require 'json'
 
 module Moonshado
   class Sms
-    @@config = {
-      :test_env => false,
-      :sms_api_url => ENV['MOONSHADOSMS_URL']
-    }
-
+    cattr_accessor :config
     attr_accessor :number, :message
 
-    def self.config
-      @@config
-    end
-
-    def self.config=(config)
-      raise MoonshadoSMSException.new("config is not a hash")
-      @@config = config
-    end
-
     def self.find(id)
-      if @@config_env[:test_env]
+      if config[:test_env] == true
         {:sms => {:id => id, :reports => '[{"update_date":"2010-01-03T22:56:45-08:00","status_info":"test"}]'}, :stat => "ok"}
       else
-        response = RestClient.get("#{@@config[:sms_api_url]}/#{id}")
+        response = RestClient.get("#{config[:sms_api_url]}/#{id}")
         JSON.parse(response.body)
       end
     end
@@ -34,14 +22,18 @@ module Moonshado
     end
 
     def deliver_sms
-      raise MoonshadoSMSException.new("Invalid message") if is_message_valid?(@message)
+      raise MoonshadoSMSException.new("Invalid message") unless is_message_valid?(@message)
 
-      response = RestClient.post(
-        @@config[:sms_api_url],
-        {:sms => {:device_address => format_number(@number), :message => @message}}
-      )
+      if config[:test_env] == true
+        {:stat => 'ok', :id => Digest::SHA1.hexdigest(Time.now.to_s + rand(12341234).to_s)[1..16]}
+      else
+        response = RestClient.post(
+          config[:sms_api_url],
+          {:sms => {:device_address => format_number(@number), :message => @message}}
+        )
 
-      JSON.parse(response.body)
+        JSON.parse(response.body)
+      end
     rescue MoonshadoSMSException => exception
       raise exception
     end
