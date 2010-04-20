@@ -10,9 +10,9 @@ begin
     gem.homepage = "http://github.com/moonshado/moonshado-sms"
     gem.authors = ["Kevin Patel"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.add_runtime_dependency "rest-client"
-    gem.add_runtime_dependency "json"
-    gem.add_runtime_dependency "activesupport"
+    gem.add_runtime_dependency "rest-client", '1.4.2'
+    gem.add_runtime_dependency "json", '1.2.0'
+    gem.add_runtime_dependency "activesupport", "2.3.5"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

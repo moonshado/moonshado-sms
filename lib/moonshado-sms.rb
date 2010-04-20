@@ -1,4 +1,4 @@
-gem 'rest-client'
+gem 'rest-client', '1.4.2'
 
 module Moonshado end
 
