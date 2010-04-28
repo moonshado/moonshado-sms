@@ -20,9 +20,13 @@ module Moonshado
     end
 
     def self.register_keywords
-      unless Moonshado::Sms.config[:keywords].nil?
-        response = RestClient.post(url, {:keywords => Moonshado::Sms.config[:keywords]})
-        JSON.parse(response.body)
+      begin
+        unless Moonshado::Sms.config[:keywords].nil?
+          response = RestClient.post(url, {:keywords => Moonshado::Sms.config[:keywords]})
+          JSON.parse(response.body)
+        end
+      rescue Exception => e
+        puts "** Moonshado-Sms: error registering keywords"
       end
     end
 
@@ -30,5 +34,6 @@ module Moonshado
       response = RestClient.delete("#{url}/#{keyword}")
       JSON.parse(response.body)
     end
+
   end
 end
