@@ -7,11 +7,16 @@ module Moonshado
     cattr_accessor :config
     attr_accessor :number, :message
 
+    def self.url
+      @url ||= URI.parse(config[:sms_api_url])
+      "#{@url.scheme}://#{@url.user}:#{@url.password}@#{@url.host}:#{@url.port}/sms"
+    end
+
     def self.find(id)
       if config[:test_env] == true
         {:sms => {:id => id, :reports => '[{"update_date":"2010-01-03T22:56:45-08:00","status_info":"test"}]'}, :stat => "ok"}
       else
-        response = RestClient.get("#{config[:sms_api_url]}/#{id}")
+        response = RestClient.get("#{url}/#{id}")
         JSON.parse(response.body)
       end
     end
@@ -28,7 +33,7 @@ module Moonshado
         {:stat => 'ok', :id => Digest::SHA1.hexdigest(Time.now.to_s + rand(12341234).to_s)[1..16]}
       else
         response = RestClient.post(
-          config[:sms_api_url],
+          Moonshado::Sms.url,
           {:sms => {:device_address => format_number(@number), :message => @message}}
         )
 
