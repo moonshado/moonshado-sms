@@ -1,8 +1,11 @@
-gem 'rest-client', '1.4.2'
+require 'rubygems'
+require 'restclient'
+require 'yajl'
+require 'moonshado/configuration'
+require 'moonshado/sms'
+require 'moonshado/keywords'
+require 'moonshado/sender'
 
-module Moonshado end
-
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/moonshado')
-
-require 'sms'
-require 'keywords'
+module Moonshado
+  
+end

@@ -1,23 +1,16 @@
-require 'active_support'
-require 'rest_client'
-require 'json'
-
 module Moonshado
   class Sms
-    cattr_accessor :config
     attr_accessor :number, :message
 
-    def self.url
-      @url ||= URI.parse(config[:sms_api_url])
-      "#{@url.scheme}://#{@url.user}:#{@url.password}@#{@url.host}:#{@url.port}/sms"
-    end
+    class << self
+      attr_accessor :configuration
+      attr_accessor :sender
 
-    def self.find(id)
-      if config[:test_env] == true
-        {:sms => {:id => id, :reports => '[{"update_date":"2010-01-03T22:56:45-08:00","status_info":"test"}]'}, :stat => "ok"}
-      else
-        response = RestClient.get("#{url}/#{id}")
-        JSON.parse(response.body)
+      def configure
+        self.configuration ||= Configuration.new
+        yield(configuration)
+        self.sender = Sender.new(configuration)
+        self
       end
     end
 
@@ -26,19 +19,23 @@ module Moonshado
       @message = message
     end
 
+    # def self.find(id)
+    #   if config[:test_env] == true
+    #     {:sms => {:id => id, :reports => '[{"update_date":"2010-01-03T22:56:45-08:00","status_info":"test"}]'}, :stat => "ok"}
+    #   else
+    #     response = RestClient.get("#{url}/#{id}")
+    #     JSON.parse(response.body)
+    #   end
+    # end
+
     def deliver_sms
       raise MoonshadoSMSException.new("Invalid message") unless is_message_valid?(@message)
 
-      if config[:test_env] == true
-        {:stat => 'ok', :id => Digest::SHA1.hexdigest(Time.now.to_s + rand(12341234).to_s)[1..16]}
-      else
-        response = RestClient.post(
-          Moonshado::Sms.url,
-          {:sms => {:device_address => format_number(@number), :message => @message}}
-        )
+      data = {:sms => {:device_address => format_number(@number), :message => @message}}
 
-        JSON.parse(response.body)
-      end
+      response = sender.send_to_moonshado(data, configuration.sms_uri)
+
+      parse(response.to_s)
     rescue MoonshadoSMSException => exception
       raise exception
     end
@@ -57,5 +54,22 @@ module Moonshado
     end
 
     class MoonshadoSMSException < StandardError; end
+
+    private
+      def sender
+        Moonshado::Sms.sender
+      end
+
+      def configuration
+        Moonshado::Sms.configuration
+      end
+
+      def production_environment?
+        configuration.production_environment
+      end
+
+      def parse(json)
+        parser = Yajl::Parser.new.parse(json)
+      end
   end
 end
