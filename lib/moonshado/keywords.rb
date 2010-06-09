@@ -1,39 +1,41 @@
-require 'active_support'
-require 'rest_client'
-require 'json'
-
 module Moonshado
-  class Keywords
-    def self.config
-      Moonshado::Sms.config
-    end
+  class Sms
+    class Keywords
+      class << self
+        def list
+          response = sender.get(configuration.keywords_uri)
 
-    def self.url
-      @url ||= URI.parse(Moonshado::Sms.config[:sms_api_url])
-      "#{@url.scheme}://#{@url.user}:#{@url.password}@#{@url.host}:#{@url.port}/keywords"
-    end
-
-    def self.list
-      response = RestClient.get(url)
-
-      JSON.parse(response.body)
-    end
-
-    def self.register_keywords
-      begin
-        unless Moonshado::Sms.config[:keywords].nil?
-          response = RestClient.post(url, {:keywords => Moonshado::Sms.config[:keywords]})
-          JSON.parse(response.body)
+          parse(response.body)
         end
-      rescue Exception => e
-        puts "** Moonshado-Sms: error registering keywords"
+
+        def register_keywords
+          response = sender.send_to_moonshado({:keywords => configuration.keywords}, configuration.keywords_uri)
+
+          parse(response.body)
+        end
+
+        # def self.destory(keyword)
+        #   response = RestClient.delete("#{url}/#{keyword}")
+        #   parse(response.body)
+        # end
+
+        private
+          def sender
+            Moonshado::Sms.sender
+          end
+
+          def configuration
+            Moonshado::Sms.configuration
+          end
+
+          def production_environment?
+            configuration.production_environment
+          end
+
+          def parse(json)
+            parser = Yajl::Parser.new.parse(json)
+          end
       end
     end
-
-    def self.destory(keyword)
-      response = RestClient.delete("#{url}/#{keyword}")
-      JSON.parse(response.body)
-    end
-
   end
 end

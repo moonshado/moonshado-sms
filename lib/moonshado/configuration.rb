@@ -2,14 +2,14 @@ module Moonshado
   class Configuration
 
     OPTIONS = [:api_key, :development_environments, :keywords,
-        :sms_uri, :keyword_uri, :auto_register_keyword,
-        :environment_name, :host, :http_open_timeout,
-        :http_read_timeout, :port, :protocol, :secure].freeze
+               :sms_uri, :keyword_uri, :auto_register_keyword,
+               :environment_name, :host, :http_open_timeout,
+               :http_read_timeout, :port, :protocol, :secure].freeze
 
     attr_accessor :api_key
     attr_accessor :keywords
     attr_accessor :sms_uri
-    attr_accessor :keyword_uri
+    attr_accessor :keywords_uri
     attr_accessor :secure
     attr_accessor :http_open_timeout
     attr_accessor :http_read_timeout
@@ -26,7 +26,7 @@ module Moonshado
       @http_read_timeout        = 5
       @production_environment   = true
       @sms_uri                  = '/sms'
-      @keyword_uri              = '/keywords'
+      @keywords_uri              = '/keywords'
       @auto_register_keyword    = false
     end
 
@@ -37,10 +37,10 @@ module Moonshado
     def formatted_api_key
       url_obj = URI.parse(@api_key)
 
-      unless (url_obj == URI::Generic)
-        url_obj.user
-      else
+      if (url_obj.class == URI::Generic)
         @api_key
+      else
+        url_obj.user
       end
     end
 

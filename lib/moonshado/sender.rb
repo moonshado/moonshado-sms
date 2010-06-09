@@ -1,5 +1,6 @@
 module Moonshado
   class Sender
+    attr_reader :host, :port, :secure, :http_open_timeout, :http_read_timeout, :protocol, :api_key
 
     def initialize(options = {})
       [:protocol, :host, :port, :secure, :http_open_timeout, :http_read_timeout, :api_key].each do |option|
@@ -18,9 +19,18 @@ module Moonshado
       response = http.post(data)
     end
 
-    private
-      attr_reader :host, :port, :secure, :http_open_timeout, :http_read_timeout, :protocol, :api_key
+    def get(uri)
+      http  = RestClient::Resource.new(
+                url(uri),
+                :user => api_key,
+                :timeout => http_read_timeout,
+                :open_timeout => http_open_timeout
+              )
 
+      response = http.get
+    end
+
+    private
       def url(uri = "")
         URI.parse("#{protocol}://#{host}:#{port}").merge(uri).to_s
       end
