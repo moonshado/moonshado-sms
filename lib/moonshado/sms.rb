@@ -38,7 +38,7 @@ module Moonshado
       if production_environment?
         response = sender.send_to_moonshado(data, configuration.sms_uri)
       else
-        response = RestClient::Response.create('{"stat":"ok","id":"e3debdc7f4719ec0"}', "", {})
+        response = RestClient::Response.create('{"stat":"ok","id":"sms_id_mock"}', "", {})
       end
 
       parse(response.to_s)
@@ -47,7 +47,7 @@ module Moonshado
     end
 
     def format_number(number)
-      formatted = number.gsub("-","").strip
+      formatted = number.scan(/\d+/i).join
       return is_number_valid?(formatted) ? formatted : (raise MoonshadoSMSException.new("Phone number (#{number}) is not formatted correctly"))
     end
 
