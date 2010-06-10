@@ -14,7 +14,7 @@ module Moonshado
     attr_accessor :http_open_timeout
     attr_accessor :http_read_timeout
     attr_accessor :host
-    attr_accessor :auto_register_keyword
+    attr_accessor :auto_register_keywords
     attr_accessor :production_environment
 
     alias_method :secure?, :secure
@@ -26,8 +26,8 @@ module Moonshado
       @http_read_timeout        = 5
       @production_environment   = true
       @sms_uri                  = '/sms'
-      @keywords_uri              = '/keywords'
-      @auto_register_keyword    = false
+      @keywords_uri             = '/keywords'
+      @auto_register_keywords    = false
     end
 
     def api_key

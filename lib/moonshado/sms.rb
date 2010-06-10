@@ -10,7 +10,9 @@ module Moonshado
         self.configuration ||= Configuration.new
         yield(configuration)
         self.sender = Sender.new(configuration)
-        self
+        if configuration.auto_register_keywords
+          Moonshado::Sms::Keywords.register_keywords
+        end
       end
     end
 
