@@ -31,7 +31,7 @@ module Moonshado
     end
 
     def api_key
-      formatted_api_key if production_environment
+      formatted_api_key if @production_environment
     end
 
     def formatted_api_key
