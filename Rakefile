@@ -10,6 +10,7 @@ begin
     gem.homepage = "http://github.com/moonshado/moonshado-sms"
     gem.authors = ["Kevin Patel"]
     gem.add_development_dependency "shoulda", ">= 0"
+    gem.add_development_dependency "webmock", ">= 0"
     gem.add_runtime_dependency "rest-client", '1.5.1'
     gem.add_runtime_dependency "yajl-ruby", '0.7.6'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
@@ -22,7 +23,7 @@ end
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+  test.pattern = 'test/**/*_test.rb'
   test.verbose = true
 end
 
@@ -30,7 +31,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
     test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
+    test.pattern = 'test/**/*_test.rb'
     test.verbose = true
   end
 rescue LoadError

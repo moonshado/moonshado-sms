@@ -9,6 +9,7 @@ module Moonshado
         end
 
         def register_keywords
+          raise MoonshadoSMSException.new("no keywords specified") unless valid_keywords?
           response = sender.send_to_moonshado({:keywords => configuration.keywords}, configuration.keywords_uri)
 
           parse(response.body)
@@ -18,6 +19,12 @@ module Moonshado
         #   response = RestClient.delete("#{url}/#{keyword}")
         #   parse(response.body)
         # end
+
+        def valid_keywords?
+          configuration.keywords.is_a?(Hash) && (!configuration.keywords.empty?)
+        end
+
+        class MoonshadoSMSException < StandardError; end
 
         private
           def sender

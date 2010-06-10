@@ -34,5 +34,13 @@ module Moonshado
       def url(uri = "")
         URI.parse("#{protocol}://#{host}:#{port}").merge(uri).to_s
       end
+
+      def configuration
+        Moonshado::Sms.configuration
+      end
+
+      def production_environment?
+        configuration.production_environment
+      end
   end
 end

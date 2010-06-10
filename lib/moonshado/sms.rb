@@ -35,7 +35,11 @@ module Moonshado
 
       data = {:sms => {:device_address => format_number(@number), :message => @message}}
 
-      response = sender.send_to_moonshado(data, configuration.sms_uri)
+      if production_environment?
+        response = sender.send_to_moonshado(data, configuration.sms_uri)
+      else
+        response = RestClient::Response.create('{"stat":"ok","id":"e3debdc7f4719ec0"}', "", {})
+      end
 
       parse(response.to_s)
     rescue MoonshadoSMSException => exception
