@@ -14,6 +14,12 @@ module Moonshado
           Moonshado::Sms::Keywords.register_keywords
         end
       end
+
+      def find(id)
+        response = sender.get(configuration.sms_uri + "/#{id}")
+
+        Yajl::Parser.new.parse(response.body)
+      end
     end
 
     def initialize(number = "", message = "")
