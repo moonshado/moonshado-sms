@@ -19,6 +19,4 @@ rdoc
 pkg
 
 ## PROJECT::SPECIFIC
-test
-gems
-cache
+tmp
