@@ -16,6 +16,7 @@ module Moonshado
     attr_accessor :host
     attr_accessor :auto_register_keywords
     attr_accessor :production_environment
+    attr_accessor :port
 
     alias_method :secure?, :secure
 
@@ -27,7 +28,8 @@ module Moonshado
       @production_environment   = true
       @sms_uri                  = '/sms'
       @keywords_uri             = '/keywords'
-      @auto_register_keywords    = false
+      @auto_register_keywords   = false
+      @port                     = default_port
     end
 
     def api_key
