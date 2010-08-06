@@ -11,7 +11,11 @@ module Moonshado
         yield(configuration)
         self.sender = Sender.new(configuration)
         if configuration.auto_register_keywords
-          Moonshado::Sms::Keywords.register_keywords
+          begin
+            Moonshado::Sms::Keywords.register_keywords
+          rescue Exception => e
+            puts "Failed to auto register keywords: #{e.message}"
+          end
         end
       end
 
