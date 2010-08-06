@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{moonshado-sms}
-  s.version = "0.4.1"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kevin Patel"]
-  s.date = %q{2010-06-11}
+  s.date = %q{2010-08-06}
   s.email = %q{tech@moonshado.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -29,7 +29,10 @@ Gem::Specification.new do |s|
      "lib/moonshado/sender.rb",
      "lib/moonshado/sms.rb",
      "moonshado-sms.gemspec",
-     "test/helper.rb"
+     "test/configuration_test.rb",
+     "test/helper.rb",
+     "test/keywords_test.rb",
+     "test/sms_test.rb"
   ]
   s.homepage = %q{http://github.com/moonshado/moonshado-sms}
   s.rdoc_options = ["--charset=UTF-8"]
