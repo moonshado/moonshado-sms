@@ -22,7 +22,7 @@ module Moonshado
       def find(id)
         response = sender.get(configuration.sms_uri + "/#{id}")
 
-        Yajl::Parser.new.parse(response.body)
+        parse(response.to_s)
       end
     end
 
@@ -46,7 +46,11 @@ module Moonshado
       data = {:sms => {:device_address => format_number(@number), :message => @message}}
 
       if production_environment?
-        response = sender.send_to_moonshado(data, configuration.sms_uri)
+        begin
+          response = sender.send_to_moonshado(data, configuration.sms_uri)
+        rescue Exception => e
+          response = RestClient::Response.create("{\"stat\":\"fail\",\"error\":\"#{e.message}\"}", "", {})
+        end
       else
         response = RestClient::Response.create('{"stat":"ok","id":"sms_id_mock"}', "", {})
       end
@@ -85,7 +89,11 @@ module Moonshado
       end
 
       def parse(json)
-        parser = Yajl::Parser.new.parse(json)
+        begin
+          parser = Yajl::Parser.new.parse(json)
+        rescue Exception => e
+          {"stat"=>"fail", "error"=>"json parser error", "response"=>json.to_s}
+        end
       end
   end
 end

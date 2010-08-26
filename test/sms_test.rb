@@ -44,5 +44,25 @@ class Moonshado::SmsTest < Test::Unit::TestCase
 
       assert_equal(sms.deliver_sms, {"id"=>"sms_id_mock", "stat"=>"ok"})
     end
+
+    should "handle bad response" do
+      sms = Moonshado::Sms.new
+      assert_equal(sms.send(:parse, "test")["stat"], 'fail')
+      assert_equal(sms.send(:parse, "test")["error"], 'json parser error')
+    end
+  end
+
+  context Moonshado::Sms do
+    setup do
+      Moonshado::Sms.configure do |config|
+        config.api_key = '20lsdjf2'
+        config.host = 'notreal.moonshado.com'
+        config.production_environment = true
+      end
+    end
+
+    should "return DNS error" do
+      assert_equal(Moonshado::Sms.new("1(555)555-6471", "test").deliver_sms["stat"], "fail")
+    end
   end
 end
