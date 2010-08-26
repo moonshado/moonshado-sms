@@ -23,8 +23,8 @@ module Moonshado
     def initialize
       @secure                   = false
       @host                     = 'heroku.moonshado.com'
-      @http_open_timeout        = 2
-      @http_read_timeout        = 5
+      @http_open_timeout        = 10
+      @http_read_timeout        = 10
       @production_environment   = true
       @sms_uri                  = '/sms'
       @keywords_uri             = '/keywords'
