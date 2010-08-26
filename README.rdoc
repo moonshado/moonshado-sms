@@ -17,4 +17,4 @@ Production environment config:
 
 == Copyright
 
-Copyright (c) 2010 Kevin Patel. See LICENSE for details.
+Copyright (c) 2010 Moonshado, Inc. See LICENSE for details.
