@@ -22,7 +22,7 @@ module Moonshado
       def find(id)
         response = sender.get(configuration.sms_uri + "/#{id}")
 
-        parse(response.to_s)
+        Yajl::Parser.new.parse(response.to_s)
       end
     end
 

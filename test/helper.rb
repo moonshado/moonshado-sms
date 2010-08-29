@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 require 'shoulda'
+require 'mocha'
 # require 'webmock/test_unit'
 begin require 'redgreen'; rescue LoadError; end
 begin require 'turn'; rescue LoadError; end

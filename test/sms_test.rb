@@ -50,6 +50,11 @@ class Moonshado::SmsTest < Test::Unit::TestCase
       assert_equal(sms.send(:parse, "test")["stat"], 'fail')
       assert_equal(sms.send(:parse, "test")["error"], 'json parser error')
     end
+
+    should "process find" do      Moonshado::Sender.any_instance.stubs(:get).returns('{"credit":5000,"id":"123456","reports":"[]","stat":"ok"}')
+
+      assert_equal(Moonshado::Sms.find('123456'), {"id"=>"123456", "credit"=>5000, "stat"=>"ok", "reports"=>"[]"})
+    end
   end
 
   context Moonshado::Sms do
