@@ -1,10 +1,11 @@
 module Moonshado
   class Configuration
 
-    OPTIONS = [:api_key, :development_environments, :keywords,
-               :sms_uri, :keyword_uri, :auto_register_keyword,
-               :environment_name, :host, :http_open_timeout,
-               :http_read_timeout, :port, :protocol, :secure].freeze
+    OPTIONS = [:api_key, :keywords, :sms_uri, 
+               :keyword_uri, :auto_register_keyword,
+               :host, :http_open_timeout, :http_read_timeout,
+               :port, :protocol, :secure,
+               :production_environment].freeze
 
     attr_accessor :api_key
     attr_accessor :keywords
@@ -17,8 +18,11 @@ module Moonshado
     attr_accessor :auto_register_keywords
     attr_accessor :production_environment
     attr_accessor :port
+    attr_accessor :message_length_range
+    attr_accessor :message_length_check
 
     alias_method :secure?, :secure
+    alias_method :message_length_check?, :message_length_check
 
     def initialize
       @secure                   = false
@@ -30,6 +34,8 @@ module Moonshado
       @keywords_uri             = '/keywords'
       @auto_register_keywords   = false
       @port                     = default_port
+      @message_length_range     = 3..115
+      @message_length_check     = true
     end
 
     def api_key

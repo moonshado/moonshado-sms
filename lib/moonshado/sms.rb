@@ -31,19 +31,10 @@ module Moonshado
       @message = message
     end
 
-    # def self.find(id)
-    #   if config[:test_env] == true
-    #     {:sms => {:id => id, :reports => '[{"update_date":"2010-01-03T22:56:45-08:00","status_info":"test"}]'}, :stat => "ok"}
-    #   else
-    #     response = RestClient.get("#{url}/#{id}")
-    #     JSON.parse(response.body)
-    #   end
-    # end
-
     def deliver_sms
       raise MoonshadoSMSException.new("Invalid message") unless is_message_valid?(@message)
 
-      data = {:sms => {:device_address => format_number(@number), :message => @message}}
+      data = {:sms => {:device_address => format_number(@number), :message => @message.to_s}}
 
       if production_environment?
         begin
@@ -70,7 +61,11 @@ module Moonshado
     end
 
     def is_message_valid?(message)
-      message.size <= 115 && !message.nil? && message.is_a?(String) && !message.empty?
+      if message_length_check?
+        message_length_range.include?(message.to_s.size)
+      else
+        true
+      end
     end
 
     class MoonshadoSMSException < StandardError; end
@@ -94,6 +89,14 @@ module Moonshado
         rescue Exception => e
           {"stat"=>"fail", "error"=>"json parser error", "response"=>json.to_s}
         end
+      end
+
+      def message_length_range
+        configuration.message_length_range
+      end
+
+      def message_length_check?
+        configuration.message_length_check?
       end
   end
 end

@@ -3,6 +3,7 @@ require 'helper'
 class Moonshado::SmsTest < Test::Unit::TestCase
   context Moonshado::Sms do
     setup do
+      Moonshado::Sms.configuration = nil
       Moonshado::Sms.configure do |config|
         config.api_key = '20lsdjf2'
         config.production_environment = false
@@ -59,15 +60,33 @@ class Moonshado::SmsTest < Test::Unit::TestCase
 
   context Moonshado::Sms do
     setup do
+      Moonshado::Sms.configuration = nil
       Moonshado::Sms.configure do |config|
         config.api_key = '20lsdjf2'
         config.host = 'notreal.moonshado.com'
-        config.production_environment = true
       end
     end
 
     should "return DNS error" do
       assert_equal(Moonshado::Sms.new("1(555)555-6471", "test").deliver_sms["stat"], "fail")
+    end
+  end
+
+  context Moonshado::Sms do
+    setup do
+      Moonshado::Sms.configuration = nil
+      Moonshado::Sms.configure do |config|
+        config.api_key = '20lsdjf2'
+        config.production_environment = false
+        config.message_length_check = false
+      end
+    end
+
+    should "not enforce message length" do
+      assert_nothing_raised do
+        message = "Well, if you like burgers give 'em a try sometime. I can't usually get 'em myself because my girlfriend's a vegitarian which pretty much makes me a vegitarian. But I do love the taste of a good burger. Mm-mm-mm. You know what they call a Quarter Pounder with cheese in France?"
+        Moonshado::Sms.new("1(555)555-6471", message).deliver_sms
+      end
     end
   end
 end
