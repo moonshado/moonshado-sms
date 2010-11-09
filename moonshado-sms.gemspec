@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kevin Patel"]
-  s.date = %q{2010-08-30}
+  s.date = %q{2010-11-09}
   s.email = %q{tech@moonshado.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -54,21 +54,21 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
-      s.add_runtime_dependency(%q<rest-client>, ["= 1.6.0"])
-      s.add_runtime_dependency(%q<yajl-ruby>, ["= 0.7.7"])
+      s.add_runtime_dependency(%q<rest-client>, [">= 1.6.0"])
+      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0.7.7"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
-      s.add_dependency(%q<rest-client>, ["= 1.6.0"])
-      s.add_dependency(%q<yajl-ruby>, ["= 0.7.7"])
+      s.add_dependency(%q<rest-client>, [">= 1.6.0"])
+      s.add_dependency(%q<yajl-ruby>, [">= 0.7.7"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
-    s.add_dependency(%q<rest-client>, ["= 1.6.0"])
-    s.add_dependency(%q<yajl-ruby>, ["= 0.7.7"])
+    s.add_dependency(%q<rest-client>, [">= 1.6.0"])
+    s.add_dependency(%q<yajl-ruby>, [">= 0.7.7"])
   end
 end
 
