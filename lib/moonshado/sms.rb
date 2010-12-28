@@ -22,7 +22,7 @@ module Moonshado
       def find(id)
         response = sender.get(configuration.sms_uri + "/#{id}")
 
-        Yajl::Parser.new.parse(response.to_s)
+        JSON.parse(response.to_s)
       end
     end
 
@@ -85,7 +85,7 @@ module Moonshado
 
       def parse(json)
         begin
-          parser = Yajl::Parser.new.parse(json)
+          JSON.parse(json)
         rescue Exception => e
           {"stat"=>"fail", "error"=>"json parser error", "response"=>json.to_s}
         end

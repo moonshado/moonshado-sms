@@ -40,7 +40,7 @@ module Moonshado
           end
 
           def parse(json)
-            parser = Yajl::Parser.new.parse(json)
+            JSON.parse(json)
           end
       end
     end

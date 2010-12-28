@@ -12,8 +12,8 @@ begin
     gem.add_development_dependency "shoulda", ">= 0"
     gem.add_development_dependency "webmock", ">= 0"
     gem.add_development_dependency "mocha", ">= 0"
-    gem.add_runtime_dependency "rest-client", '1.6.0'
-    gem.add_runtime_dependency "yajl-ruby", '0.7.7'
+    gem.add_runtime_dependency "rest-client", ">= 1.4.0"
+    gem.add_runtime_dependency "json", ">= 1.2.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
