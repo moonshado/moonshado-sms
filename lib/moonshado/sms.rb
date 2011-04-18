@@ -57,7 +57,7 @@ module Moonshado
     end
 
     def is_number_valid?(number)
-      number.length >= 11 && number[/^.\d+$/]
+      number.length >= 10 && number[/^.\d+$/]
     end
 
     def is_message_valid?(message)
