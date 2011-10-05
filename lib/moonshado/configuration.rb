@@ -78,6 +78,10 @@ module Moonshado
       end
     end
 
+    def credit_uri
+      "#{sms_uri}/credit"
+    end
+
     private
       def default_port
         if secure?

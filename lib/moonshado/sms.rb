@@ -17,6 +17,12 @@ module Moonshado
             puts "Failed to auto register keywords: #{e.message}"
           end
         end
+
+        def get_credit
+          response = sender.get(configuration.credit_uri)
+
+          JSON.parse(response.body)
+        end
       end
 
       def find(id)
