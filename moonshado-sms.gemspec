@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{moonshado-sms}
-  s.version = "1.1.1.rc2"
+  s.version = "1.1.1"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kevin Patel"]
-  s.date = %q{2011-04-18}
+  s.date = %q{2011-10-05}
   s.email = %q{tech@moonshado.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://github.com/moonshado/moonshado-sms}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.2}
+  s.rubygems_version = %q{1.5.3}
   s.summary = %q{Moonshado SMS gem}
   s.test_files = [
     "test/configuration_test.rb",
@@ -51,20 +51,20 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<webmock>, [">= 0"])
       s.add_development_dependency(%q<mocha>, [">= 0"])
-      s.add_runtime_dependency(%q<rest-client>, [">= 1.4.0"])
+      s.add_runtime_dependency(%q<rest-client>, [">= 1.6.0"])
       s.add_runtime_dependency(%q<json>, [">= 1.2.0"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<webmock>, [">= 0"])
       s.add_dependency(%q<mocha>, [">= 0"])
-      s.add_dependency(%q<rest-client>, [">= 1.4.0"])
+      s.add_dependency(%q<rest-client>, [">= 1.6.0"])
       s.add_dependency(%q<json>, [">= 1.2.0"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<webmock>, [">= 0"])
     s.add_dependency(%q<mocha>, [">= 0"])
-    s.add_dependency(%q<rest-client>, [">= 1.4.0"])
+    s.add_dependency(%q<rest-client>, [">= 1.6.0"])
     s.add_dependency(%q<json>, [">= 1.2.0"])
   end
 end
