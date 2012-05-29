@@ -22,5 +22,11 @@ class Moonshado::SmsTest < Test::Unit::TestCase
 
       assert_equal(Moonshado::Sms.configuration.api_key, "lasjdflk283")
     end
+
+    should "be on port 443 if secure is specified" do
+      Moonshado::Sms.configuration.secure = true
+
+      assert_equal(443, Moonshado::Sms.configuration.port)
+    end
   end
 end

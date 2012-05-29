@@ -33,7 +33,7 @@ module Moonshado
       @sms_uri                  = '/sms'
       @keywords_uri             = '/keywords'
       @auto_register_keywords   = false
-      @port                     = default_port
+      @port                     = nil
       @message_length_range     = 3..115
       @message_length_check     = true
     end
